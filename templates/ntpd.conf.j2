@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+# Configuration file for OpenNTPD, see ntpd.conf(5)
+
+# Addresses to listen on (ntpd does not listen by default)
+{% for item in openntpd_listen %}
+listen on {{ item }}
+{% else %}
+#listen on *
+{% endfor %}
+
+# Specify IP addresses or the hostnames of NTP servers to synchronize to.
+{% for item in openntpd_servers %}
+servers {{ item }}
+{% else %}
+#server 0.gentoo.pool.ntp.org
+{% endfor %}

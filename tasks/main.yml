@@ -1,0 +1,31 @@
+---
+- name: unmask net-misc/openntpd-5.7*
+  copy: >
+    dest=/etc/portage/package.keywords/openntpd
+    content='=net-misc/openntpd-5.7*\n'
+    owner=root group=root mode=0644
+  tags: [install, packages]
+
+- name: install net-misc/openntpd
+  portage: package=net-misc/openntpd
+  tags: [install, packages]
+
+  # workaround for https://bugs.gentoo.org/show_bug.cgi?id=558352
+- name: fix directory permissions
+  file: >
+    state=directory
+    path=/var/lib/openntpd/chroot
+    owner=root group=root mode=0755
+  tags: install
+
+- name: configure ntpd
+  template: >
+    src=ntpd.conf.j2
+    dest=/etc/ntpd.conf
+    owner=root group=root mode=0644
+  notify: restart ntpd
+  tags: config
+
+- name: enable and start ntpd
+  service: name=ntpd enabled=yes state=started
+  tags: services

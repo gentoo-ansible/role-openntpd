@@ -1,0 +1,13 @@
+---
+# List of local IP addresses or a hostnames the ntpd daemon should listen on to
+# enable remote clients synchronization. If '*' is given as an address, ntpd
+# will listen on all local addresses using the specified routing table.
+# ntpd does not listen on any address by default.
+openntpd_listen: []
+
+# List of the servers (domain names or IP addresses) ntpd should sync with.
+openntpd_servers:
+  - 0.gentoo.pool.ntp.org
+  - 1.gentoo.pool.ntp.org
+  - 2.gentoo.pool.ntp.org
+  - 3.gentoo.pool.ntp.org
